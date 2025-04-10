@@ -25,7 +25,7 @@ function NavBar() {
           <div className="col-span-1 lg:block hidden">
             <Link to="/">
               <img
-                src="/images/logo.png"
+                src={`${process.env.PUBLIC_URL}/images/logo.png`}
                 alt="logo"
                 className="top-0 bottom-0 right-0 left-0 h-20 object-contain"
               />

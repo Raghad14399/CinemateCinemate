@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import SideBar from '../SideBar';
-import { Input, Message } from '../../../Components/UsedInputs';
-import Uploader from '../../../Components/Uploader';
-import { CategoriesData } from '../../../Data/CategoriesData';
-import { UsersData } from '../../../Data/MovieData';
-import { MdDelete } from 'react-icons/md';
-import { FaEdit } from 'react-icons/fa';
-import { ImUpload } from 'react-icons/im';
-import EditCastModal from '../../../Components/Modals/EditCastModal'; 
+import React, { useState, useEffect } from "react";
+import SideBar from "../SideBar";
+import { Input, Message } from "../../../Components/UsedInputs";
+import Uploader from "../../../Components/Uploader";
+import { CategoriesData } from "../../../Data/CategoriesData";
+import { UsersData } from "../../../Data/MovieData";
+import { MdDelete } from "react-icons/md";
+import { FaEdit } from "react-icons/fa";
+import { ImUpload } from "react-icons/im";
+import EditCastModal from "../../../Components/Modals/EditCastModal";
 
 function AddMovie() {
   const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedCast, setSelectedCast] = useState(null); 
+  const [selectedCast, setSelectedCast] = useState(null);
 
   useEffect(() => {
     setCategories(CategoriesData);
@@ -38,39 +38,76 @@ function AddMovie() {
       <div className="flex flex-col gap-6">
         <h2 className="text-xl font-bold">Create Movie</h2>
         <div className="w-full grid md:grid-cols-2 gap-6">
-          <Input label="Movie Title" placeholder="Game of Thrones" type="text" bg={true} />
+          <Input
+            label="Movie Title"
+            placeholder="Game of Thrones"
+            type="text"
+            bg={true}
+          />
           <Input label="Hours" placeholder="2hr" type="text" bg={true} />
         </div>
         <div className="w-full grid md:grid-cols-2 gap-6">
-          <Input label="Language used" placeholder="English" type="text" bg={true} />
-          <Input label="Translation language" placeholder="Arabic" type="text" bg={true} />
-          <Input label="Year of Release" placeholder="2022" type="number" bg={true} />
+          <Input
+            label="Language used"
+            placeholder="English"
+            type="text"
+            bg={true}
+          />
+          <Input
+            label="Translation language"
+            placeholder="Arabic"
+            type="text"
+            bg={true}
+          />
+          <Input
+            label="Year of Release"
+            placeholder="2022"
+            type="number"
+            bg={true}
+          />
         </div>
 
         {/* Images */}
         <div className="w-full grid md:grid-cols-2 gap-6">
           <div className="flex flex-col gap-2 group">
-            <p className="text-border font-semibold text-sm">Image Without Title</p>
+            <p className="text-border font-semibold text-sm">
+              Image Without Title
+            </p>
             <Uploader />
             <div className="w-32 h-32 p-2 bg-main border border-border rounded-2xl overflow-hidden transition-transform duration-300 group-hover:scale-105">
-              <img src="/images/Movies/1.jpg" alt="" className="w-full h-full object-cover rounded-2xl" />
+              <img
+                src={`${process.env.PUBLIC_URL}/images/Movies/1.jpg`}
+                alt=""
+                className="w-full h-full object-cover rounded-2xl"
+              />
             </div>
           </div>
           <div className="flex flex-col gap-2 group">
-            <p className="text-border font-semibold text-sm">Image With Title</p>
+            <p className="text-border font-semibold text-sm">
+              Image With Title
+            </p>
             <Uploader />
             <div className="w-32 h-32 p-2 bg-main border border-border rounded-2xl overflow-hidden transition-transform duration-300 group-hover:scale-105">
-              <img src="/images/Movies/2.jpg" alt="" className="w-full h-full object-cover rounded-2xl" />
+              <img
+                src={`${process.env.PUBLIC_URL}/images/Movies/2.jpg`}
+                alt=""
+                className="w-full h-full object-cover rounded-2xl"
+              />
             </div>
           </div>
         </div>
 
         {/* Description */}
-        <Message label="Movie Description" placeholder="Make it short and sweet" />
+        <Message
+          label="Movie Description"
+          placeholder="Make it short and sweet"
+        />
 
         {/* Category */}
         <div className="flex flex-col gap-2 text-border">
-          <label htmlFor="category" className="font-medium text-sm">Category</label>
+          <label htmlFor="category" className="font-medium text-sm">
+            Category
+          </label>
           <select
             id="category"
             value={selectedCategory}
@@ -89,7 +126,7 @@ function AddMovie() {
         {/* Casts */}
         <div className="w-full grid lg:grid-cols-2 gap-6 items-start">
           <button
-            onClick={() => openModal({})} 
+            onClick={() => openModal({})}
             className="w-full py-4 bg-main border border-beige3 border-dashed text-white rounded-2xl hover:bg-beige3 transition-colors duration-300"
           >
             Add Cast
@@ -101,7 +138,9 @@ function AddMovie() {
                 className="p-2 italic text-xs text-text rounded-2xl flex-colo bg-main border border-border transition-transform duration-300 hover:scale-105"
               >
                 <img
-                  src={`/images/${user.image ? user.image : 'user.png'}`}
+                  src={`${process.env.PUBLIC_URL}/images/${
+                    user.image ? user.image : "user.png"
+                  }`}
                   alt={user.name}
                   className="w-full h-24 object-cover rounded-2xl mb-2"
                 />
@@ -111,7 +150,7 @@ function AddMovie() {
                     <MdDelete />
                   </button>
                   <button
-                    onClick={() => openModal(user)} 
+                    onClick={() => openModal(user)}
                     className="w-6 h-6 flex justify-center items-center bg-dry border border-border text-gray-500 rounded-2xl hover:bg-green-500 hover:text-white transition-colors duration-300"
                   >
                     <FaEdit />
@@ -127,7 +166,11 @@ function AddMovie() {
         </button>
       </div>
 
-      <EditCastModal isOpen={isModalOpen} onClose={closeModal} cast={selectedCast} />
+      <EditCastModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        cast={selectedCast}
+      />
     </SideBar>
   );
 }

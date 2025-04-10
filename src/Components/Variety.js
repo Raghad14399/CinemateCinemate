@@ -7,7 +7,7 @@ function Variety({ variety }) {
     <div className='border border-border p-1 hover:scale-95 transition relative rounded-2xl overflow-hidden'>
       <Link to={`/variety/${variety?.name}`} className='w-full'>
         <img
-          src={`/images/variety/${variety?.image}`}
+          src={`${process.env.PUBLIC_URL}/images/variety/${variety?.image}`}
           alt={variety?.name}
           className='w-full h-64 object-cover'
         />

@@ -28,7 +28,7 @@ function Promos() {
              </div>
           </div>
        <div>
-           <img src='/images/mobile.png' alt='Mobile app' className='w-full object-contain' />
+           <img src={`${process.env.PUBLIC_URL}/images/mobile.png`} alt='Mobile app' className='w-full object-contain' />
        </div>
        
        

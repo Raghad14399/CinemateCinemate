@@ -58,7 +58,7 @@ function AboutUs() {
               </div>
               <div className='mt-10 lg:mt-0'>
                 <img 
-                  src="/images/aboutus.jpg" 
+                  src={`${process.env.PUBLIC_URL}/images/aboutus.jpg`} 
                   alt="aboutus" 
                   className='w-full h-auto max-h-112 rounded-2xl object-cover' /> {/* زيادة الارتفاع */}
               </div>

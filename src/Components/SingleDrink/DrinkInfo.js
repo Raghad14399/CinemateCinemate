@@ -39,7 +39,7 @@ function DrinkInfo({ drink }) {
     <div
       className="w-full h-screen flex flex-col lg:flex-row text-white animate-fadeIn sm:px-4 lg:px-32 py-8 sm:py-12 lg:py-16 gap-6 shadow-lg"
       style={{
-        backgroundImage: `url(/images/Drink/${drink?.image})`,
+        backgroundImage: `url(${process.env.PUBLIC_URL}/images/Drink/${drink?.image})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed',
@@ -50,7 +50,7 @@ function DrinkInfo({ drink }) {
     >
       <div className="w-full lg:w-1/3 h-1/2 lg:h-full lg:ml-auto">
         <img
-          src={`/images/Drink/${drink?.image}`}
+          src={`${process.env.PUBLIC_URL}/images/Drink/${drink?.image}`}
           alt={drink?.name}
           className="w-full h-full object-cover rounded-3xl lg:rounded-l-3xl shadow-lg"
         />

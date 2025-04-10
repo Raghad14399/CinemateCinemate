@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import SideBar from './SideBar';
-import Table from '../../Components/Table';
-import { Movies } from '../../Data/MovieData';
-import { FaSearch } from 'react-icons/fa';
+import React, { useState } from "react";
+import SideBar from "./SideBar";
+import Table from "../../Components/Table";
+import { Movies } from "../../Data/MovieData";
+import { FaSearch } from "react-icons/fa";
 
 function FavoritesMovies() {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [isAlertOpen, setIsAlertOpen] = useState(false); // حالة النافذة المنبثقة
 
   // دالة لفتح النافذة المنبثقة
@@ -20,9 +20,15 @@ function FavoritesMovies() {
 
   // دالة لتنفيذ الإجراء عند التأكيد
   const handleConfirm = () => {
-    console.log('All favorites deleted!');
+    console.log("All favorites deleted!");
     closeAlert(); // إغلاق النافذة بعد التأكيد
   };
+
+  // تعديل بيانات الأفلام لتشمل المسار الصحيح للصور
+  const MoviesWithCorrectPaths = Movies.map((movie) => ({
+    ...movie,
+    image: `${process.env.PUBLIC_URL}/images/movies/${movie.image}`,
+  }));
 
   return (
     <SideBar>
@@ -32,7 +38,7 @@ function FavoritesMovies() {
           <form className="text-sm bg-dry border border-border rounded-xl flex items-center gap-4 w-full shadow-md">
             <button
               type="button"
-              onClick={() => console.log('Search button clicked')}
+              onClick={() => console.log("Search button clicked")}
               className="w-10 flex-colo h-10 rounded-2xl text-border hover:bg-subMain-dark transition duration-200"
             >
               <FaSearch />
@@ -59,7 +65,7 @@ function FavoritesMovies() {
         </div>
 
         {/* Table */}
-        <Table data={Movies} admin={false} />
+        <Table data={MoviesWithCorrectPaths} admin={false} />
 
         {/* Pop-up Alert */}
         {isAlertOpen && (
@@ -71,8 +77,12 @@ function FavoritesMovies() {
               className="bg-dry p-8 rounded-2xl shadow-lg text-center w-[90%] md:w-[400px]"
               onClick={(e) => e.stopPropagation()} // منع إغلاق النافذة عند النقر داخلها
             >
-              <h3 className="text-xl font-bold text-white mb-4">Are you sure?</h3>
-              <p className="text-gray-400 mb-6">This action cannot be undone.</p>
+              <h3 className="text-xl font-bold text-white mb-4">
+                Are you sure?
+              </h3>
+              <p className="text-gray-400 mb-6">
+                This action cannot be undone.
+              </p>
               <div className="flex justify-center gap-4">
                 <button
                   className="bg-red-500 text-white py-2 px-6 rounded-xl hover:bg-red-700 transition duration-300"

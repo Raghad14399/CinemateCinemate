@@ -26,9 +26,13 @@ function Dashboard() {
       total: 134,
     },
   ];
+
   return (
     <SideBar>
-      <h2 className="text-xl font-bold"> Dashboard </h2>
+      {/* عنوان الصفحة */}
+      <h2 className="text-xl font-bold">Dashboard</h2>
+
+      {/* عرض البيانات الرئيسية (إحصائيات) */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
         {DashboardData.map((data, index) => (
           <div
@@ -42,13 +46,21 @@ function Dashboard() {
             </div>
             <div className="col-span-3">
               <h2>{data.title}</h2>
-              <p className="mt-2 font-bold"> {data.total} </p>
+              <p className="mt-2 font-bold">{data.total}</p>
             </div>
           </div>
         ))}
       </div>
-      <h3 className="text-md font-medium my-6 text-border"> Recent Movies</h3>
-      <Table data={Movies.slice(0.5)} admin={true} />
+
+      {/* عرض الجدول الخاص بالأفلام الأخيرة */}
+      <h3 className="text-md font-medium my-6 text-border">Recent Movies</h3>
+      <Table
+        data={Movies.slice(0, 5).map((movie) => ({
+          ...movie,
+          image: `${process.env.PUBLIC_URL}/images/movies/${movie.image}`,
+        }))}
+        admin={true}
+      />
     </SideBar>
   );
 }

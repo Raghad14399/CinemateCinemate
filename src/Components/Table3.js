@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import { FaCloudUploadAlt, FaEdit } from 'react-icons/fa';
-import { GoEye } from 'react-icons/go';
-import { MdDelete } from 'react-icons/md';
-import { Link } from 'react-router-dom';
-import EditSnacksModal from './Modals/EditeSnacksModal'
+import React, { useState } from "react";
+import { FaCloudUploadAlt, FaEdit } from "react-icons/fa";
+import { GoEye } from "react-icons/go";
+import { MdDelete } from "react-icons/md";
+import { Link } from "react-router-dom";
+import EditSnacksModal from "./Modals/EditeSnacksModal";
 
-const Head = 'text-xs text-left text-main font-semibold px-6 py-4 uppercase bg-gray-700 text-gray-200';
-const Text = 'text-sm text-left leading-6 whiteSpace-nowrap px-5 py-3';
+const Head =
+  "text-xs text-left text-main font-semibold px-6 py-4 uppercase bg-gray-700 text-gray-200";
+const Text = "text-sm text-left leading-6 whitespace-nowrap px-5 py-3";
 
 const Rows = (snack, i, admin, openModal, setSelectedSnack) => {
   return (
@@ -14,21 +15,21 @@ const Rows = (snack, i, admin, openModal, setSelectedSnack) => {
       <td className={`${Text}`}>
         <div className="w-12 h-12 p-1 bg-dry border border-border rounded-xl overflow-hidden">
           <img
-            src={`/images/Nachos/${snack.image}`}
-            alt={snack?.name}
+            src={`${process.env.PUBLIC_URL}/images/Nachos/${snack.image}`}
+            alt={snack?.name || "Snack"}
             className="w-full h-full object-cover"
           />
         </div>
       </td>
       <td className={`${Text} truncate`}>{snack.name}</td>
       <td className={`${Text}`}>{snack.varieties}</td>
-      <td className={`${Text}`}>{snack.time}</td>
+      <td className={`${Text}`}>{snack.time || "N/A"}</td>
       <td className={`${Text} float-right flex gap-2 items-center`}>
         {admin ? (
           <>
             <button
               onClick={() => {
-                setSelectedSnack(snack); 
+                setSelectedSnack(snack);
                 openModal();
               }}
               className="border border-border bg-gray-700 hover:bg-green-500 hover:text-white text-border flex items-center gap-2 rounded-lg py-1 px-3 transition-all duration-200"
@@ -58,7 +59,7 @@ const Rows = (snack, i, admin, openModal, setSelectedSnack) => {
 };
 
 function Table3({ data, admin }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);  
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedSnack, setSelectedSnack] = useState(null);
 
   const openModal = () => setIsModalOpen(true);
@@ -78,8 +79,8 @@ function Table3({ data, admin }) {
             <th scope="col" className={`${Head}`}>
               Varieties
             </th>
-
             <th scope="col" className={`${Head}`}>
+              Time
             </th>
             <th scope="col" className={`${Head} text-right`}>
               Actions
@@ -92,14 +93,12 @@ function Table3({ data, admin }) {
           )}
         </tbody>
       </table>
-    <EditSnacksModal
-      isOpen={isModalOpen}
-      onClose={closeModal}
-      snack={selectedSnack}  
-    />
-  
-  </div>
-
+      <EditSnacksModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        snack={selectedSnack}
+      />
+    </div>
   );
 }
 

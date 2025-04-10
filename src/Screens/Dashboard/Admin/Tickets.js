@@ -1,12 +1,18 @@
-import React, { useState } from 'react'
-import SideBar from '../SideBar'
-import Table5 from '../../../Components/Table5'
-import { Ticket } from '../../../Data/HallData'
-import { FaSearch } from 'react-icons/fa'
+import React, { useState } from "react";
+import SideBar from "../SideBar";
+import Table5 from "../../../Components/Table5";
+import { Ticket } from "../../../Data/HallData";
+import { FaSearch } from "react-icons/fa";
 
 function Tickets() {
-    const [searchQuery, setSearchQuery] = useState('');
-  
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // تعديل بيانات التذاكر لتشمل المسار الصحيح للصور
+  const TicketWithCorrectPaths = Ticket.map((ticket) => ({
+    ...ticket,
+    image: `${process.env.PUBLIC_URL}/images/tickets/${ticket.image}`,
+  }));
+
   return (
     <SideBar>
       <div className="flex flex-col gap-6">
@@ -30,10 +36,10 @@ function Tickets() {
         </div>
         <h2 className="text-xl font-bold"> Payment Verification </h2>
 
-        <Table5 data={Ticket} tickets={true} />
+        <Table5 data={TicketWithCorrectPaths} tickets={true} />
       </div>
     </SideBar>
   );
 }
 
-export default Tickets
+export default Tickets;

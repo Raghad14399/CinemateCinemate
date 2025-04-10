@@ -50,7 +50,7 @@ function PopcornInfo({ popcorn }) {
     >
       <div className="w-full lg:w-1/3 h-1/2 lg:h-full lg:ml-auto">
         <img
-          src={`/images/Popcorn/${popcorn?.image}`}
+          src={`${process.env.PUBLIC_URL}/images/Popcorn/${popcorn?.image}`}
           alt={popcorn?.name}
           className="w-full h-full object-cover rounded-3xl lg:rounded-l-3xl shadow-lg"
         />

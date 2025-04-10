@@ -17,7 +17,7 @@ function Login() {
         <div className="w-full 2xl:w-1/3 gap-4 flex-colo p-8 sm:p-6 md:w-2/5 bg-dry rounded-xl border border-border shadow-sm relative">
           {/* logo */}
           <img
-            src="/images/logo.png"
+            src={`${process.env.PUBLIC_URL}/images/logo.png`}
             alt="logo"
             className="w-1/4 h-auto object-contain mx-auto mb-3"
           />

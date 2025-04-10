@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { HiPencilAlt } from 'react-icons/hi';
-import { IoClose } from 'react-icons/io5';
-import Uploader from '../Uploader';
+import React, { useState, useEffect } from "react";
+import { HiPencilAlt } from "react-icons/hi";
+import { IoClose } from "react-icons/io5";
+import Uploader from "../Uploader";
 
 function EditMovieModal({ isOpen, onClose, movie }) {
-  const [movieName, setMovieName] = useState('');
-  const [movieCategory, setMovieCategory] = useState('');
-  const [movieLanguage, setMovieLanguage] = useState('');
-  const [movieYear, setMovieYear] = useState('');
-  const [movieHour, setMovieHour] = useState('');
-  const [movieImage, setMovieImage] = useState('');
+  const [movieName, setMovieName] = useState("");
+  const [movieCategory, setMovieCategory] = useState("");
+  const [movieLanguage, setMovieLanguage] = useState("");
+  const [movieYear, setMovieYear] = useState("");
+  const [movieHour, setMovieHour] = useState("");
+  const [movieImage, setMovieImage] = useState("");
 
   useEffect(() => {
     if (movie) {
@@ -25,18 +25,18 @@ function EditMovieModal({ isOpen, onClose, movie }) {
   const handleEditMovie = () => {
     if (movieName && movieCategory && movieLanguage && movieYear && movieHour) {
       alert(`Movie edited: ${movieName}`);
-      onClose(); 
+      onClose();
     } else {
-      alert('Please fill in all fields.');
+      alert("Please fill in all fields.");
     }
   };
 
   return (
     <div
       className={`fixed inset-0 z-50 flex items-start justify-center transition-all duration-500 ease-in-out ${
-        isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+        isOpen ? "opacity-100 visible" : "opacity-0 invisible"
       }`}
-      style={{ top: '2%' }} 
+      style={{ top: "2%" }}
     >
       {/* Background overlay */}
       {isOpen && (
@@ -49,7 +49,7 @@ function EditMovieModal({ isOpen, onClose, movie }) {
       {/* Modal content */}
       <div
         className={`relative bg-gray-900 text-white border border-border w-[90%] md:w-[600px] p-8 rounded-2xl transform transition-transform duration-500 ease-in-out z-50 ${
-          isOpen ? 'scale-100' : 'scale-90'
+          isOpen ? "scale-100" : "scale-90"
         }`}
       >
         {/* Header */}
@@ -69,7 +69,9 @@ function EditMovieModal({ isOpen, onClose, movie }) {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Movie Name */}
             <div>
-              <label className="block text-sm font-semibold mb-2 text-border">Movie Name</label>
+              <label className="block text-sm font-semibold mb-2 text-border">
+                Movie Name
+              </label>
               <input
                 type="text"
                 value={movieName}
@@ -81,7 +83,9 @@ function EditMovieModal({ isOpen, onClose, movie }) {
 
             {/* Category */}
             <div>
-              <label className="block text-sm font-semibold mb-2 text-border">Category</label>
+              <label className="block text-sm font-semibold mb-2 text-border">
+                Category
+              </label>
               <input
                 type="text"
                 value={movieCategory}
@@ -95,7 +99,9 @@ function EditMovieModal({ isOpen, onClose, movie }) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Language */}
             <div>
-              <label className="block text-sm font-semibold mb-2 text-border">Language</label>
+              <label className="block text-sm font-semibold mb-2 text-border">
+                Language
+              </label>
               <input
                 type="text"
                 value={movieLanguage}
@@ -107,7 +113,9 @@ function EditMovieModal({ isOpen, onClose, movie }) {
 
             {/* Year */}
             <div>
-              <label className="block text-sm font-semibold mb-2 text-border">Year</label>
+              <label className="block text-sm font-semibold mb-2 text-border">
+                Year
+              </label>
               <input
                 type="text"
                 value={movieYear}
@@ -119,7 +127,9 @@ function EditMovieModal({ isOpen, onClose, movie }) {
 
             {/* Hour */}
             <div>
-              <label className="block text-sm font-semibold mb-2 text-border">Hour</label>
+              <label className="block text-sm font-semibold mb-2 text-border">
+                Hour
+              </label>
               <input
                 type="text"
                 value={movieHour}
@@ -132,7 +142,9 @@ function EditMovieModal({ isOpen, onClose, movie }) {
 
           {/* Uploader */}
           <div>
-            <label className="block text-sm font-semibold mb-2 text-border">Movie Image</label>
+            <label className="block text-sm font-semibold mb-2 text-border">
+              Movie Image
+            </label>
             <Uploader className="w-full" />
           </div>
 
@@ -141,8 +153,8 @@ function EditMovieModal({ isOpen, onClose, movie }) {
             <div className="flex justify-start">
               <div className="w-32 h-32 p-2 bg-main border border-border rounded-2xl overflow-hidden transition-transform duration-300 group-hover:scale-105">
                 <img
-                  src={`/images/movies/${movieImage}`}
-                  alt={movieName}
+                  src={`${process.env.PUBLIC_URL}/images/movies/${movieImage}`}
+                  alt={movieName || "Movie"}
                   className="w-full h-full object-cover rounded-2xl"
                 />
               </div>

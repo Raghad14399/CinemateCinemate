@@ -108,7 +108,7 @@ function EditCinemaHall() {
             style={{
               width: "50px",
               height: "50px",
-              backgroundImage: `url(/images/cinema.png)`,
+              backgroundImage: `url(${process.env.PUBLIC_URL}/images/cinema.png)`,
               backgroundSize: "cover",
               backgroundPosition: "center",
               borderRadius: "4px",
@@ -271,7 +271,7 @@ function EditCinemaHall() {
             <div
               className="w-6 h-6 bg-cover bg-center"
               style={{
-                backgroundImage: `url(/images/cinema.png)`,
+                backgroundImage: `url(${process.env.PUBLIC_URL}/images/cinema.png)`,
               }}
             ></div>
             <span className="text-base text-gray-700">Seat</span>

@@ -7,7 +7,7 @@ function NachosSlice({ nachosSlice }) {
       <Link to={`/nachos/${nachosSlice?.name}`} className="w-full relative"> 
         <div className="overflow-hidden">
           <img
-            src={`/images/Nachos/${nachosSlice?.image}`}
+            src={`${process.env.PUBLIC_URL}/images/Nachos/${nachosSlice?.image}`}
             alt={nachosSlice?.name}
             className="w-full h-64 object-cover scale-150"
           />

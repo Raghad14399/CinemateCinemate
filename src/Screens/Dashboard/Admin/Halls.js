@@ -25,7 +25,13 @@ function CinemaHalls() {
     });
   };
 
-  const filteredHalls = Hall.filter((hall) =>
+  // تعديل بيانات القاعات لتشمل المسار الصحيح للصور
+  const HallWithCorrectPaths = Hall.map((hall) => ({
+    ...hall,
+    image: `${process.env.PUBLIC_URL}/images/halls/${hall.image}`,
+  }));
+
+  const filteredHalls = HallWithCorrectPaths.filter((hall) =>
     hall.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -70,7 +76,7 @@ function CinemaHalls() {
               onClick={() => handleHallClick(hall)}
             >
               <img
-                src={`/images/halls/${hall.image}`}
+                src={hall.image}
                 alt={hall.name}
                 className="w-full h-40 object-cover rounded-t-lg"
               />

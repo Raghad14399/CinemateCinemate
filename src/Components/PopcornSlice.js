@@ -7,7 +7,7 @@ function PopcornSlice({ popcornSlice }) {
       <Link to={`/popcorn/${popcornSlice?.name}`} className="w-full relative">
         <div className="overflow-hidden">
           <img
-            src={`/images/Popcorn/${popcornSlice?.image}`}
+            src={`${process.env.PUBLIC_URL}/images/Popcorn/${popcornSlice?.image}`}
             alt={popcornSlice?.name}
             className="w-full h-64 object-cover scale-150"
           />

@@ -7,7 +7,7 @@ function NotFound() {
     <div className="flex-colo gap-8 w-full min-h-screen text-white bg-main lg:py-20 py-10 px-6 ">
       <img
         className="w-full h-96 object-contain animate-pulse "
-        src="/images/404.svg"
+        src={`${process.env.PUBLIC_URL}/images/404.svg`}
         alt="NotFound"
       />
       <h1 className="lg:text-5xl text-3xl font-extrabold tracking-wide text-center animate-pulse">

@@ -86,7 +86,7 @@ const Booking = () => {
             style={{
               width: '50px',
               height: '50px',
-              backgroundImage: `url('/images/cinema.png')`,
+              backgroundImage: `url('${process.env.PUBLIC_URL}/images/cinema.png')`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               margin: '0 4px',

@@ -1,16 +1,40 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import SideBar from "../SideBar";
 
-function CreateCinemaHall() {
+function EditCinemaHall() {
+  const { state } = useLocation();
+  const hallDataFromState = state || {};
+  const { hallNumber, hallType, rows, columns, aisles } = hallDataFromState;
   const navigate = useNavigate();
-  const [hallNumber, setHallNumber] = useState("");
-  const [hallType, setHallType] = useState("Standard");
-  const [rows, setRows] = useState(15);
-  const [columns, setColumns] = useState(10);
-  const [aisles, setAisles] = useState([]); // قائمة الممرات
 
-  const totalSeats = rows * columns;
+  // const [selectedSeats, setSelectedSeats] = useState([]);
+  const [selectedSeats] = useState([]);
+
+  const [reservedSeats] = useState(["A1", "B3", "C5"]);
+  const [hallData, setHallData] = useState({
+    hallNumber: hallNumber || "",
+    hallType: hallType || "Standard",
+    rows: rows || 10,
+    columns: columns || 15,
+    aisles: Array.isArray(aisles) ? aisles : [],
+  });
+
+  const totalSeats =
+    hallData.rows && hallData.columns
+      ? hallData.rows * hallData.columns -
+      (Array.isArray(hallData.aisles) ? hallData.aisles.length : 0)
+      : 0;
+
+  useEffect(() => {
+    setHallData({
+      hallNumber: hallNumber || "",
+      hallType: hallType || "Standard",
+      rows: rows || 10,
+      columns: columns || 15,
+      aisles: Array.isArray(aisles) ? aisles : [],
+    });
+  }, [hallNumber, hallType, rows, columns, aisles]);
 
   const generateRowLabels = (count) => {
     const labels = [];
@@ -26,77 +50,70 @@ function CreateCinemaHall() {
     return labels;
   };
 
-  const configureHall = (type) => {
-    switch (type) {
-      case "4K":
-        return { rows: 12, columns: 10 };
-      case "VIP":
-        return { rows: 8, columns: 10 };
-      default:
-        return { rows: 10, columns: 15 };
-    }
-  };
-
-  const handleHallTypeChange = (type) => {
-    setHallType(type);
-    const config = configureHall(type);
-    setRows(config.rows);
-    setColumns(config.columns);
-    setAisles([]);
-  };
-
   const addAisle = (seat) => {
-    if (aisles.includes(seat)) {
-      setAisles(aisles.filter((s) => s !== seat)); // إزالة الكرسي من الممرات
+    if (hallData.aisles.includes(seat)) {
+      setHallData((prevData) => ({
+        ...prevData,
+        aisles: prevData.aisles.filter((s) => s !== seat),
+      }));
     } else {
-      setAisles([...aisles, seat]); // إضافة الكرسي إلى الممرات
+      setHallData((prevData) => ({
+        ...prevData,
+        aisles: [...prevData.aisles, seat],
+      }));
     }
   };
 
   const renderSeats = () => {
-    const rowLabels = generateRowLabels(rows);
+    const rowLabels = generateRowLabels(hallData.rows);
 
-    // إضافة الصفوف والكراسي
     return rowLabels.map((label, i) => {
       const row = [];
-      for (let j = 1; j <= columns; j++) {
+      for (let j = 1; j <= hallData.columns; j++) {
         const seat = `${label}${j}`;
-        const isAisle = aisles.includes(seat); // هل الكرسي مدرج كممر؟
+        const isAisle = hallData.aisles.includes(seat);
+        const isReserved = reservedSeats.includes(seat);
+        const isSelected = selectedSeats.includes(seat);
 
-        // إذا كان الكرسي مدرجًا كممر، نعرض فراغًا
+        // إذا كان الكرسي مدرجًا كممر
         if (isAisle) {
           row.push(
             <div
               key={seat}
-              onClick={() => addAisle(seat)} // النقر بالزر الأيسر لاستعادة الكرسي
+              onClick={() => addAisle(seat)}
               className="inline-flex items-center justify-center"
               style={{
                 width: "50px",
                 height: "50px",
                 margin: "0 4px",
-                border: "1px dashed gray", // حدود خفيفة للممر
+                border: "1px dashed gray",
               }}
             ></div>
           );
           continue;
         }
 
-        // إذا لم يكن الكرسي مدرجًا كممر، نعرضه بشكله الأصلي
+        // إذا لم يكن الكرسي مدرجًا كممر
         row.push(
           <div
             key={seat}
-            onClick={() => addAisle(seat)} // النقر بالزر الأيسر لتحويل الكرسي إلى ممر
-            className="inline-flex items-center justify-center cursor-pointer transition-all relative"
+            onClick={() => addAisle(seat)}
+            className={`inline-flex items-center justify-center cursor-pointer transition-all relative ${isReserved
+                ? "bg-dry cursor-not-allowed"
+                : isSelected
+                  ? "bg-green-500"
+                  : ""
+              }`}
             style={{
               width: "50px",
               height: "50px",
-              backgroundImage: `url(${process.env.PUBLIC_URL}/images/cinema.png)`, // صورة الكرسي الأصلية
+              backgroundImage: `url(${process.env.PUBLIC_URL}/images/cinema.png)`,
               backgroundSize: "cover",
               backgroundPosition: "center",
               borderRadius: "4px",
               margin: "0 4px",
             }}
-            title={seat} // عرض اسم الكرسي عند التحويم
+            title={seat}
           >
             {/* الرقم الخاص بالكرسي مع الشفافية */}
             <span
@@ -120,7 +137,10 @@ function CreateCinemaHall() {
             {label}
           </div>
           {/* Seats */}
-          <div className="flex gap-2" style={{ minWidth: `${columns * 58}px` }}>
+          <div
+            className="flex gap-2"
+            style={{ minWidth: `${hallData.columns * 58}px` }}
+          >
             {row}
           </div>
         </div>
@@ -131,25 +151,28 @@ function CreateCinemaHall() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(
-      `Hall Number: ${hallNumber}, Type: ${hallType}, Total Seats: ${totalSeats}`
+      `Hall Number: ${hallData.hallNumber}, Type: ${hallData.hallType}, Total Seats: ${totalSeats}`
     );
-    console.log(`Aisles: ${aisles}`);
+    console.log(`Aisles: ${hallData.aisles}`);
+  };
+
+  const handleClose = () => {
+    navigate("/halls");
   };
 
   return (
     <SideBar>
       <div className="p-6 bg-lightGray rounded-lg shadow-md">
-        <button
-          className="absolute top-4 right-4 text-gray-500 hover:text-red-500 font-bold py-1 px-3 rounded-full transition duration-300 ease-in-out"
-          onClick={() => navigate("/halls")}
-          aria-label="Close"
-        >
-          ✕
-        </button>
+        <div className="absolute top-2 right-2">
+          <button
+            onClick={handleClose}
+            className="text-xl font-bold text-gray-500 rounded-full w-8 h-8 flex items-center justify-center"
+          >
+            ✕
+          </button>
+        </div>
 
-        <h2 className="text-xl font-bold text-white mb-6">
-          Create a New Cinema Hall
-        </h2>
+        <h2 className="text-xl font-bold text-white mb-6">Edit Cinema Hall</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="flex gap-4">
             <div className="flex flex-col gap-1 w-1/2">
@@ -162,8 +185,10 @@ function CreateCinemaHall() {
               <input
                 id="hallNumber"
                 type="text"
-                value={hallNumber}
-                onChange={(e) => setHallNumber(e.target.value)}
+                value={hallData.hallNumber}
+                onChange={(e) =>
+                  setHallData({ ...hallData, hallNumber: e.target.value })
+                }
                 placeholder="Enter hall number"
                 className="text-sm placeholder-gray-700 p-3 rounded-2xl border border-border bg-main focus:outline-none focus:ring-1 focus:ring-beige"
               />
@@ -177,8 +202,10 @@ function CreateCinemaHall() {
               </label>
               <select
                 id="hallType"
-                value={hallType}
-                onChange={(e) => handleHallTypeChange(e.target.value)}
+                value={hallData.hallType}
+                onChange={(e) =>
+                  setHallData({ ...hallData, hallType: e.target.value })
+                }
                 className="text-sm p-3 rounded-2xl border border-border bg-main focus:outline-none focus:ring-1 focus:ring-beige"
               >
                 <option value="Standard">Standard</option>
@@ -196,8 +223,10 @@ function CreateCinemaHall() {
               <input
                 id="rows"
                 type="text"
-                value={rows}
-                onChange={(e) => setRows(Number(e.target.value))}
+                value={hallData.rows}
+                onChange={(e) =>
+                  setHallData({ ...hallData, rows: Number(e.target.value) })
+                }
                 placeholder="Number of rows"
                 className="text-sm placeholder-gray-700 p-3 rounded-2xl border border-border bg-main focus:outline-none focus:ring-1 focus:ring-beige"
               />
@@ -212,19 +241,26 @@ function CreateCinemaHall() {
               <input
                 id="columns"
                 type="text"
-                value={columns}
-                onChange={(e) => setColumns(Number(e.target.value))}
+                value={hallData.columns}
+                onChange={(e) =>
+                  setHallData({ ...hallData, columns: Number(e.target.value) })
+                }
                 placeholder="Number of columns"
                 className="text-sm placeholder-gray-700 p-3 rounded-2xl border border-border bg-main focus:outline-none focus:ring-1 focus:ring-beige"
               />
             </div>
           </div>
 
+          <div className="flex items-center justify-between text-gray-500 font-medium text-sm">
+            <span>Total Seats:</span>
+            <span className="text-lg font-bold">{totalSeats}</span>
+          </div>
+
           <button
             type="submit"
             className="w-full py-3 bg-beige3 text-white text-sm font-medium rounded-2xl hover:bg-dry border border-beige3 transition duration-300"
           >
-            Create Hall
+            Edit Hall
           </button>
         </form>
 
@@ -245,14 +281,17 @@ function CreateCinemaHall() {
           </div>
         </div>
 
+        {/* Seat Layout */}
         <div className="mt-10">
-          {/* Shared Scroll Container */}
+          <h2 className="text-base font-semibold text-beige3 mb-4 p-3">
+            Seat Layout
+          </h2>
           <div
             className="flex flex-col gap-4"
             style={{
               maxHeight: "500px",
-              overflowY: "auto", // تمكين التمرير الرأسي المشترك
-              overflowX: "auto", // تمكين التمرير الأفقي للكراسي
+              overflowY: "auto",
+              overflowX: "auto",
             }}
           >
             {renderSeats()}
@@ -263,4 +302,4 @@ function CreateCinemaHall() {
   );
 }
 
-export default CreateCinemaHall;
+export default EditCinemaHall;

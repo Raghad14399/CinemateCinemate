@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
-import { AiOutlineLoading3Quarters } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 function NachosInfo({ nachos }) {
-  const [size, setSize] = useState('Small');
-  const [price, setPrice] = useState(20); 
+  const [size, setSize] = useState("Small");
+  const [price, setPrice] = useState(20);
   const [quantity, setQuantity] = useState(1);
 
   const handleSizeChange = (selectedSize) => {
     setSize(selectedSize);
-    if (selectedSize === 'Small') {
-      setPrice(20); 
-    } else if (selectedSize === 'Medium') {
+    if (selectedSize === "Small") {
+      setPrice(20);
+    } else if (selectedSize === "Medium") {
       setPrice(20 + 2);
-    } else if (selectedSize === 'Large') {
-      setPrice(20 + 4); 
+    } else if (selectedSize === "Large") {
+      setPrice(20 + 4);
     }
   };
 
@@ -39,19 +39,19 @@ function NachosInfo({ nachos }) {
     <div
       className="w-full h-screen flex flex-col lg:flex-row text-white animate-fadeIn sm:px-4 lg:px-32 py-8 sm:py-12 lg:py-16 gap-6 shadow-lg"
       style={{
-        backgroundImage: `url(/images/Nachos/${nachos?.image})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'fixed',
-        backgroundColor: 'rgba(0, 0.8, 10.8, 0.9)',  
-        boxShadow: 'inherit',
-        backgroundBlendMode: 'overlay',  
+        backgroundImage: `url(${process.env.PUBLIC_URL}/images/Nachos/${nachos?.image})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+        backgroundColor: "rgba(0, 0.8, 10.8, 0.9)",
+        boxShadow: "inherit",
+        backgroundBlendMode: "overlay",
       }}
     >
       <div className="w-full lg:w-1/3 h-1/2 lg:h-full lg:ml-auto">
         <img
-          src={`/images/Nachos/${nachos?.image}`}
-          alt={nachos?.name}
+          src={`${process.env.PUBLIC_URL}/images/Nachos/${nachos?.image}`}
+          alt={nachos?.name || "Nachos"}
           className="w-full h-full object-cover rounded-3xl lg:rounded-l-3xl shadow-lg"
         />
       </div>
@@ -68,14 +68,14 @@ function NachosInfo({ nachos }) {
           <div>
             <h3 className="font-semibold text-lg text-gray-400">Choose Size</h3>
             <div className="flex gap-4 mt-3">
-              {['Small', 'Medium', 'Large'].map((sizeOption) => (
+              {["Small", "Medium", "Large"].map((sizeOption) => (
                 <button
                   key={sizeOption}
                   onClick={() => handleSizeChange(sizeOption)}
                   className={`px-14 py-2 rounded-full text-sm font-semibold border transition-all duration-300 ${
                     size === sizeOption
-                      ? 'bg-beige3 text-gray-900 border-beige3 shadow-lg scale-105'
-                      : 'bg-transparent text-gray-300 border-gray-500 hover:bg-beige3 hover:text-gray-900 hover:shadow-lg'
+                      ? "bg-beige3 text-gray-900 border-beige3 shadow-lg scale-105"
+                      : "bg-transparent text-gray-300 border-gray-500 hover:bg-beige3 hover:text-gray-900 hover:shadow-lg"
                   }`}
                 >
                   {sizeOption}
@@ -112,4 +112,4 @@ function NachosInfo({ nachos }) {
   );
 }
 
-export default NachosInfo
+export default NachosInfo;

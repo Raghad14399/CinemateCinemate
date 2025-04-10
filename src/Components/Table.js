@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
-import { FaCloudUploadAlt, FaEdit } from 'react-icons/fa';
-import { GoEye } from 'react-icons/go';
-import { MdDelete } from 'react-icons/md';
-import { Link } from 'react-router-dom';
-import EditMovieModal from './Modals/EditeMovieModal';
+import React, { useState } from "react";
+import { FaCloudUploadAlt, FaEdit } from "react-icons/fa";
+import { GoEye } from "react-icons/go";
+import { MdDelete } from "react-icons/md";
+import { Link } from "react-router-dom";
+import EditMovieModal from "./Modals/EditeMovieModal";
 
-const Head = 'text-xs text-left text-main font-semibold px-6 py-4 uppercase bg-gray-700 text-gray-200';
-const Text = 'text-sm text-left leading-6 whiteSpace-nowrap px-5 py-3';
+const Head =
+  "text-xs text-left text-main font-semibold px-6 py-4 uppercase bg-gray-700 text-gray-200";
+const Text = "text-sm text-left leading-6 whitespace-nowrap px-5 py-3";
 
 function Table({ data, admin }) {
   const [isEditModalOpen, setEditModalOpen] = useState(false);
@@ -27,8 +28,8 @@ function Table({ data, admin }) {
       <td className={`${Text}`}>
         <div className="w-12 h-12 p-1 bg-dry border border-border rounded-xl overflow-hidden">
           <img
-            src={`/images/movies/${movie.image}`}
-            alt={movie?.name}
+            src={`${process.env.PUBLIC_URL}/images/movies/${movie.image}`}
+            alt={movie?.name || "Movie"}
             className="w-full h-full object-cover"
           />
         </div>
@@ -54,7 +55,11 @@ function Table({ data, admin }) {
         ) : (
           <>
             <button className="border border-border bg-gray-700 hover:bg-green-500 hover:text-white text-border flex items-center gap-2 rounded-lg py-1 px-3 transition-all duration-200">
-              <Link to={`/booking/${movie.name}`} state={{ availableHalls: movie.halls }} className="flex items-center gap-2">
+              <Link
+                to={`/booking/${movie.name}`}
+                state={{ availableHalls: movie.halls }}
+                className="flex items-center gap-2"
+              >
                 Booking <FaCloudUploadAlt />
               </Link>
             </button>
@@ -76,13 +81,27 @@ function Table({ data, admin }) {
         <table className="w-full table-auto divide-y divide-gray-800">
           <thead>
             <tr>
-              <th scope="col" className={`${Head}`}>Image</th>
-              <th scope="col" className={`${Head}`}>Name</th>
-              <th scope="col" className={`${Head}`}>Category</th>
-              <th scope="col" className={`${Head}`}>Language</th>
-              <th scope="col" className={`${Head}`}>Year</th>
-              <th scope="col" className={`${Head}`}>Hours</th>
-              <th scope="col" className={`${Head} text-right`}>Actions</th>
+              <th scope="col" className={`${Head}`}>
+                Image
+              </th>
+              <th scope="col" className={`${Head}`}>
+                Name
+              </th>
+              <th scope="col" className={`${Head}`}>
+                Category
+              </th>
+              <th scope="col" className={`${Head}`}>
+                Language
+              </th>
+              <th scope="col" className={`${Head}`}>
+                Year
+              </th>
+              <th scope="col" className={`${Head}`}>
+                Hours
+              </th>
+              <th scope="col" className={`${Head} text-right`}>
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody className="bg-gray-900 divide-y divide-gray-800">
@@ -94,7 +113,7 @@ function Table({ data, admin }) {
       <EditMovieModal
         isOpen={isEditModalOpen}
         onClose={closeEditModal}
-        movie={selectedMovie} 
+        movie={selectedMovie}
       />
     </>
   );

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import Table3 from '../../../Components/Table3';
-import SideBar from '../SideBar';
-import { Nachos } from '../../../Data/PopcornData';
-import { FaSearch } from 'react-icons/fa';
+import React, { useState } from "react";
+import Table3 from "../../../Components/Table3";
+import SideBar from "../SideBar";
+import { Nachos } from "../../../Data/PopcornData";
+import { FaSearch } from "react-icons/fa";
 
 function SnackList() {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [isAlertOpen, setIsAlertOpen] = useState(false); // حالة النافذة المنبثقة
 
   // دالة لفتح النافذة المنبثقة
@@ -20,9 +20,15 @@ function SnackList() {
 
   // دالة لتنفيذ الإجراء عند التأكيد
   const handleConfirm = () => {
-    console.log('All snacks deleted!');
+    console.log("All snacks deleted!");
     closeAlert(); // إغلاق النافذة بعد التأكيد
   };
+
+  // تعديل بيانات الوجبات لتشمل المسار الصحيح للصور
+  const NachosWithCorrectPaths = Nachos.map((snack) => ({
+    ...snack,
+    image: `${process.env.PUBLIC_URL}/images/snacks/${snack.image}`,
+  }));
 
   return (
     <SideBar>
@@ -32,7 +38,7 @@ function SnackList() {
           <form className="text-sm bg-dry border border-border rounded-xl flex items-center gap-4 w-full shadow-md">
             <button
               type="button"
-              onClick={() => console.log('Search button clicked')}
+              onClick={() => console.log("Search button clicked")}
               className="w-10 flex-colo h-10 rounded-2xl text-border hover:bg-subMain-dark transition duration-200"
             >
               <FaSearch />
@@ -59,7 +65,7 @@ function SnackList() {
         </div>
 
         {/* Table */}
-        <Table3 data={Nachos} admin={true} />
+        <Table3 data={NachosWithCorrectPaths} admin={true} />
 
         {/* Pop-up Alert */}
         {isAlertOpen && (
@@ -71,8 +77,12 @@ function SnackList() {
               className="bg-dry p-8 rounded-2xl shadow-lg text-center w-[90%] md:w-[400px]"
               onClick={(e) => e.stopPropagation()} // منع إغلاق النافذة عند النقر داخلها
             >
-              <h3 className="text-xl font-bold text-white mb-4">Are you sure?</h3>
-              <p className="text-gray-400 mb-6">This action cannot be undone.</p>
+              <h3 className="text-xl font-bold text-white mb-4">
+                Are you sure?
+              </h3>
+              <p className="text-gray-400 mb-6">
+                This action cannot be undone.
+              </p>
               <div className="flex justify-center gap-4">
                 <button
                   className="bg-red-500 text-white py-2 px-6 rounded-xl hover:bg-red-700 transition duration-300"
